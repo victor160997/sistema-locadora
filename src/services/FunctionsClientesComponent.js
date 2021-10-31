@@ -12,7 +12,7 @@ export function renderHeaderClientes() {
   );
 }
 
-export function renderClientes(clientes, deleteClientes) {
+export function renderClientes(clientes, deleteClientes, setState) {
   return clientes.map((cliente) => {
     return (
       <tr key={ cliente['id_cliente'] }>
@@ -29,6 +29,16 @@ export function renderClientes(clientes, deleteClientes) {
           </button>
           <button
             type="button"
+            onClick={ () => {
+              const born = cliente['data_nascimento'].replace(' 00:00:00', '');
+              return setState({
+                cpf: cliente.cpf ,
+                nascimento: born,
+                idCliente: cliente['id_cliente'],
+                nome: cliente.nome,
+                atualizando: true,
+              })
+            } }
           >
             Atualizar Informações
           </button> 
@@ -46,7 +56,9 @@ function geraIdClientes(clientes) {
   return Number(lastId + 1);
 }
 
-export function adcCliente(handleChange, cpf, nascimento, nome, updateClientes, clienteState) {
+export function adcCliente(t) {
+  const { cpf, nascimento, nome, atualizando, idCliente } = t.state;
+  const { updateClientes, clienteState, updateOnlyCliente } = t.props;
   return (
     <form>
       <label htmlFor="cpf">
@@ -55,7 +67,7 @@ export function adcCliente(handleChange, cpf, nascimento, nome, updateClientes, 
           type="number"
           name="cpf"
           value={ cpf }
-          onChange={ (e) => handleChange(e) }
+          onChange={ (e) => t.handleChange(e) }
         />  
       </label>
       <label htmlFor="cpf">
@@ -64,7 +76,7 @@ export function adcCliente(handleChange, cpf, nascimento, nome, updateClientes, 
           type="date"
           name="nascimento"
           value={ nascimento }
-          onChange={ (e) => handleChange(e) }
+          onChange={ (e) => t.handleChange(e) }
         />  
       </label>
       <label htmlFor="cpf">
@@ -73,21 +85,31 @@ export function adcCliente(handleChange, cpf, nascimento, nome, updateClientes, 
           type="text"
           name="nome"
           value={ nome }
-          onChange={ (e) => handleChange(e) }
+          onChange={ (e) => t.handleChange(e) }
         />  
       </label>
       <button
         type="button"
         onClick={
-          () => updateClientes({ 
-            id_cliente: geraIdClientes(clienteState),
-            nome,
-            cpf,
-            data_nascimento: `${nascimento} 00:00:00`
-          })
+          () => {
+            if (atualizando) {
+              return updateOnlyCliente({ 
+                id_cliente: idCliente,
+                nome,
+                cpf,
+                data_nascimento: `${nascimento} 00:00:00`
+              })
+            }
+            return updateClientes({ 
+              id_cliente: geraIdClientes(clienteState),
+              nome,
+              cpf,
+              data_nascimento: `${nascimento} 00:00:00`
+            })
+          }
         }
       >
-        Adicionar Cliente
+        { atualizando ? 'Atualizar' : 'Adicionar Cliente'}
       </button>
     </form>
   );

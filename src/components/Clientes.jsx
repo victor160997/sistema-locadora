@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { deleteClientesAction, updateClientesAction } from '../redux/actions';
-import { adcCliente, renderClientes, renderHeaderClientes } from '../services/Functions';
+import { deleteClientesAction, updateClientesAction,
+  updateOnlyClienteAction } from '../redux/actions';
+import { adcCliente, renderClientes,
+  renderHeaderClientes } from '../services/FunctionsClientesComponent';
 
 class Clientes extends Component {
   constructor(props) {
@@ -14,6 +16,7 @@ class Clientes extends Component {
       nome: '',
     }
     this.handleChange = this.handleChange.bind(this);
+    this.setToUpdate = this.setToUpdate.bind(this);
   }
 
   componentDidMount() {
@@ -26,9 +29,10 @@ class Clientes extends Component {
       this.setState({ 
         clientes: clienteState,
         cpf: '',
-      nascimento: '',
-      idCliente: '',
-      nome: '',
+        nascimento: '',
+        idCliente: '',
+        nome: '',
+        atualizando: false,
       });
     }
   }
@@ -42,16 +46,20 @@ class Clientes extends Component {
     this.setState({ clientes: clienteState });
   }
 
+  setToUpdate(info) {
+    return this.setState(info);
+  }
+
   render() {
-    const { clientes, cpf, nascimento, nome } = this.state;
-    const { updateClientes, clienteState, deleteClientes } = this.props;
+    const { clientes } = this.state;
+    const { deleteClientes } = this.props;
     return (
       <div>
-        { adcCliente(this.handleChange, cpf, nascimento, nome, updateClientes, clienteState) }
+        { adcCliente(this) }
         <table border="1px">
           <tbody>
             { renderHeaderClientes() }
-            { renderClientes(clientes, deleteClientes) }
+            { renderClientes(clientes, deleteClientes, this.setToUpdate) }
           </tbody>
         </table>
       </div>
@@ -61,7 +69,8 @@ class Clientes extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   updateClientes: (payload) => dispatch(updateClientesAction(payload)),
-  deleteClientes: (payload) => dispatch(deleteClientesAction(payload))
+  deleteClientes: (payload) => dispatch(deleteClientesAction(payload)),
+  updateOnlyCliente: (payload) => dispatch(updateOnlyClienteAction(payload))
 });
 
 const mapStateToProps = ({ locadoraData }) => ({

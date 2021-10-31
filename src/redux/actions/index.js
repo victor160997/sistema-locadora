@@ -1,11 +1,12 @@
 export const actions = {
   REQUEST_CLIENTES: 'REQUEST_CLIENTES',
+  UPDATE_CLIENTES: 'UPDATE_CLIENTES',
+  DELETE_CLIENTES: 'DELETE_CLIENTES',
+  UPDATE_ONLY_CLIENTE: 'UPDATE_ONLY_CLIENTE',
   REQUEST_FILMES: 'REQUEST_FILMES',
   REQUEST_LOCACOES: 'REQUEST_LOCACOES',
-  UPDATE_CLIENTES: 'UPDATE_CLIENTES',
   UPDATE_FILMES: 'UPDATE_FILMES',
   UPDATE_LOCACOES: 'UPDATE_CLIENTES',
-  DELETE_CLIENTES: 'DELETE_CLIENTES'
 };
 
 export const getClientesAction = (payload) => ({
@@ -26,5 +27,9 @@ export const updateClientesAction = (payload) => ({
 
 export const deleteClientesAction = (payload) => ({
   type: actions.DELETE_CLIENTES, payload,
+});
+
+export const updateOnlyClienteAction = (payload) => ({
+  type: actions.UPDATE_ONLY_CLIENTE, payload,
 });
 
