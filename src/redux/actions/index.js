@@ -4,7 +4,8 @@ export const actions = {
   REQUEST_LOCACOES: 'REQUEST_LOCACOES',
   UPDATE_CLIENTES: 'UPDATE_CLIENTES',
   UPDATE_FILMES: 'UPDATE_FILMES',
-  UPDATE_LOCACOES: 'UPDATE_CLIENTES'
+  UPDATE_LOCACOES: 'UPDATE_CLIENTES',
+  DELETE_CLIENTES: 'DELETE_CLIENTES'
 };
 
 export const getClientesAction = (payload) => ({
@@ -18,3 +19,12 @@ export const getFilmesAction = (payload) => ({
 export const getLocacoesAction = (payload) => ({
   type: actions.REQUEST_Locacoes, payload,
 });
+
+export const updateClientesAction = (payload) => ({
+  type: actions.UPDATE_CLIENTES, payload,
+});
+
+export const deleteClientesAction = (payload) => ({
+  type: actions.DELETE_CLIENTES, payload,
+});
+

@@ -1,15 +1,30 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
 import Clientes from '../components/Clientes'
 import Filmes from '../components/Filmes'
 import Locacoes from '../components/Locacoes'
+import { getClientesAction } from '../redux/actions';
+import getLocadoraInfo from '../services/fetchLocadora';
 
-export default class HomePage extends Component {
+class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       exibe: 'filmes',
+      clientes: [],
     }
     this.handleRadio= this.handleRadio.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchInfoLocadora('cliente');
+  }
+
+  async fetchInfoLocadora(section) {
+    const { getClientes } = this.props;
+    const response = await getLocadoraInfo(section);
+    this.setState({ clientes: response });
+    getClientes(response);
   }
 
   handleRadio({ target }) {
@@ -55,3 +70,9 @@ export default class HomePage extends Component {
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({
+  getClientes: (payload) => dispatch(getClientesAction(payload))
+});
+
+export default connect(null, mapDispatchToProps)(HomePage);
