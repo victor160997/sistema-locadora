@@ -73,8 +73,8 @@ const mapDispatchToProps = (dispatch) => ({
   updateOnlyCliente: (payload) => dispatch(updateOnlyClienteAction(payload))
 });
 
-const mapStateToProps = ({ locadoraData }) => ({
-  clienteState: locadoraData.clientes,
+const mapStateToProps = ({ locadoraDataCliente }) => ({
+  clienteState: locadoraDataCliente.clientes,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Clientes);

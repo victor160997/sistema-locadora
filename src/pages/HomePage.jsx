@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Clientes from '../components/Clientes'
 import Filmes from '../components/Filmes'
 import Locacoes from '../components/Locacoes'
-import { getClientesAction } from '../redux/actions';
+import { getClientesAction, getFilmesAction } from '../redux/actions';
 import getLocadoraInfo from '../services/fetchLocadora';
 
 class HomePage extends Component {
@@ -12,19 +12,27 @@ class HomePage extends Component {
     this.state = {
       exibe: 'filmes',
       clientes: [],
+      filmes: [],
     }
     this.handleRadio= this.handleRadio.bind(this);
   }
 
   componentDidMount() {
     this.fetchInfoLocadora('cliente');
+    this.fetchInfoLocadora('filme');
   }
 
   async fetchInfoLocadora(section) {
-    const { getClientes } = this.props;
+    const { getClientes, getFilmes } = this.props;
     const response = await getLocadoraInfo(section);
-    this.setState({ clientes: response });
-    getClientes(response);
+    if(section === 'cliente') {
+      this.setState({ clientes: response });
+      getClientes(response);
+    }
+    if(section === 'filme') {
+      this.setState({ filmes: response });
+      getFilmes(response);
+    }
   }
 
   handleRadio({ target }) {
@@ -72,7 +80,8 @@ class HomePage extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getClientes: (payload) => dispatch(getClientesAction(payload))
+  getClientes: (payload) => dispatch(getClientesAction(payload)),
+  getFilmes: (payload) => dispatch(getFilmesAction(payload))
 });
 
 export default connect(null, mapDispatchToProps)(HomePage);

@@ -1,24 +1,23 @@
 export const actions = {
+  /* ACTIONS CLIENTES */
   REQUEST_CLIENTES: 'REQUEST_CLIENTES',
   UPDATE_CLIENTES: 'UPDATE_CLIENTES',
   DELETE_CLIENTES: 'DELETE_CLIENTES',
   UPDATE_ONLY_CLIENTE: 'UPDATE_ONLY_CLIENTE',
+  /* ACTIONS FILMES */
   REQUEST_FILMES: 'REQUEST_FILMES',
-  REQUEST_LOCACOES: 'REQUEST_LOCACOES',
   UPDATE_FILMES: 'UPDATE_FILMES',
+  DELETE_FILMES: 'DELETE_FILMES',
+  UPDATE_ONLY_FILME: 'UPDATE_ONLY_FILME',
+  /* ACTIONS FILMES */
+  REQUEST_LOCACOES: 'REQUEST_LOCACOES',
   UPDATE_LOCACOES: 'UPDATE_CLIENTES',
 };
 
+/* ACTIONS CLIENTES */
+/* -------------------------------------------------------------------- */
 export const getClientesAction = (payload) => ({
   type: actions.REQUEST_CLIENTES, payload,
-});
-
-export const getFilmesAction = (payload) => ({
-  type: actions.REQUEST_FILMES, payload,
-});
-
-export const getLocacoesAction = (payload) => ({
-  type: actions.REQUEST_Locacoes, payload,
 });
 
 export const updateClientesAction = (payload) => ({
@@ -32,4 +31,38 @@ export const deleteClientesAction = (payload) => ({
 export const updateOnlyClienteAction = (payload) => ({
   type: actions.UPDATE_ONLY_CLIENTE, payload,
 });
+
+/*  TERMINA ACTIONS CLIENTES */
+/* -------------------------------------------------------------------- */
+/* ACTIONS FILMES */
+
+export const getFilmesAction = (payload) => ({
+  type: actions.REQUEST_FILMES, payload,
+});
+
+export const updateFilmesAction = (payload) => ({
+  type: actions.UPDATE_FILMES, payload,
+});
+
+export const deleteFilmesAction = (payload) => ({
+  type: actions.DELETE_FILMES, payload,
+});
+
+
+export const updateOnlyFilmeAction = (payload) => ({
+  type: actions.UPDATE_ONLY_FILME, payload,
+});
+
+/* TERMINA ACTIONS FILMES */
+/* -------------------------------------------------------------------- */
+/* ACTIONS LOCACOES */
+
+export const getLocacoesAction = (payload) => ({
+  type: actions.REQUEST_Locacoes, payload,
+});
+
+/* TERMINA ACTIONS LOCACOES */
+/* -------------------------------------------------------------------- */
+
+
 
