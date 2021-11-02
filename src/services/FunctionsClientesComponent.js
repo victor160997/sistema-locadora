@@ -56,6 +56,34 @@ function geraIdClientes(clientes) {
   return Number(lastId + 1);
 }
 
+const date = new Date();
+
+function vererificaInfos(infos) {
+  if (infos.cpf.length !== 11) {
+    return {
+      status: false,
+      msg: 'Número de CPF inválido!'
+    };
+  }
+  if(infos.nome.length < 3) {
+    return {
+      status: false,
+      msg: 'Nome do cliente inválido!'
+    };
+  }
+  if(infos.data_nascimento === ' 00:00:00'
+    || infos.data_nascimento.split('-')[0] < 1900
+    || date.getFullYear() - infos.data_nascimento.split('-')[0] <= 15) {
+    return {
+      status: false,
+      msg: 'Favor inserir data de nascimento válida, lembrando que um cliente deve ter no mínimo 16 anos!'
+    };
+  }
+  return {
+    status: true
+  }
+}
+
 export function adcCliente(t) {
   const { cpf, nascimento, nome, atualizando, idCliente } = t.state;
   const { updateClientes, clienteState, updateOnlyCliente } = t.props;
@@ -91,21 +119,28 @@ export function adcCliente(t) {
       <button
         type="button"
         onClick={
-          () => {
+          (e) => {
+            e.preventDefault();
             if (atualizando) {
-              return updateOnlyCliente({ 
+              const infos = { 
                 id_cliente: idCliente,
                 nome,
                 cpf,
                 data_nascimento: `${nascimento} 00:00:00`
-              })
+              };
+              const verifica = vererificaInfos(infos);
+              return verifica.status ? updateOnlyCliente(infos)
+                : global.alert(verifica.msg);
             }
-            return updateClientes({ 
+            const infos = { 
               id_cliente: geraIdClientes(clienteState),
               nome,
               cpf,
               data_nascimento: `${nascimento} 00:00:00`
-            })
+            };
+            const verifica = vererificaInfos(infos);
+              return verifica.status ? updateClientes(infos)
+                : global.alert(verifica.msg);
           }
         }
       >

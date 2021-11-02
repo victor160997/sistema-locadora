@@ -11,7 +11,9 @@ export const actions = {
   UPDATE_ONLY_FILME: 'UPDATE_ONLY_FILME',
   /* ACTIONS FILMES */
   REQUEST_LOCACOES: 'REQUEST_LOCACOES',
-  UPDATE_LOCACOES: 'UPDATE_CLIENTES',
+  UPDATE_LOCACOES: 'UPDATE_LOCACOES',
+  DELETE_LOCACOES: 'DELETE_LOCACOES',
+  UPDATE_ONLY_LOCACAO: 'UPDATE_ONLY_LOCACAO',
 };
 
 /* ACTIONS CLIENTES */
@@ -58,7 +60,19 @@ export const updateOnlyFilmeAction = (payload) => ({
 /* ACTIONS LOCACOES */
 
 export const getLocacoesAction = (payload) => ({
-  type: actions.REQUEST_Locacoes, payload,
+  type: actions.REQUEST_LOCACOES, payload,
+});
+
+export const updateLocacoesAction = (payload) => ({
+  type: actions.UPDATE_LOCACOES, payload,
+});
+
+export const deleteLocacoesAction = (payload) => ({
+  type: actions.DELETE_LOCACOES, payload,
+});
+
+export const updateOnlyLocacaoAction = (payload) => ({
+  type: actions.UPDATE_ONLY_LOCACAO, payload,
 });
 
 /* TERMINA ACTIONS LOCACOES */

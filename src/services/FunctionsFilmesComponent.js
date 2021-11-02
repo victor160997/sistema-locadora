@@ -56,6 +56,34 @@ function geraIdFilmes(filmes) {
   return Number(lastId + 1);
 }
 
+function vererificaInfos(infos) {
+  if (infos.classificacao_indicativa < 1
+    || infos.classificacao_indicativa > 4) {
+    return {
+      status: false,
+      msg: 'Classificação indicativa inválida, selecione 1 para +18, 2 para +16, 3 para +12, 4 para livre!'
+    };
+  }
+  if(infos.titulo.length < 3) {
+    return {
+      status: false,
+      msg: 'Título do filme inválido!'
+    };
+  }
+  const dataLancamento = `${infos.lancamento.replace(' 00:00:00', 'T00:00:00')}-03:00`;
+  const compare = (new Date() - new Date(dataLancamento))/ 1000 / 60 / 60;
+  if(infos.lancamento === ' 00:00:00'
+    || compare < 0) {
+    return {
+      status: false,
+      msg: 'Data de lançamento inválida!'
+    };
+  }
+  return {
+    status: true
+  }
+}
+
 export function adcFilmes(t) {
   const { titulo, lancamento, classificacaoIndicativa, atualizando, idFilme } = t.state;
   const { updateFilmes, filmeState, updateOnlyFilme } = t.props;
@@ -93,19 +121,23 @@ export function adcFilmes(t) {
         onClick={
           () => {
             if (atualizando) {
-              return updateOnlyFilme({ 
+              const infos = { 
                 id_filme: idFilme,
                 titulo,
                 classificacao_indicativa: classificacaoIndicativa,
                 lancamento: `${lancamento} 00:00:00`
-              })
+              };
+              const verifica = vererificaInfos(infos);
+              return verifica.status ? updateOnlyFilme(infos) : global.alert(verifica.msg);
             }
-            return updateFilmes({ 
+            const infos = { 
               id_filme: geraIdFilmes(filmeState),
               titulo,
               classificacao_indicativa: classificacaoIndicativa,
               lancamento: `${lancamento} 00:00:00`
-            })
+            };
+            const verifica = vererificaInfos(infos);
+            return verifica.status ? updateFilmes(infos) : global.alert(verifica.msg);
           }
         }
       >

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Clientes from '../components/Clientes'
 import Filmes from '../components/Filmes'
 import Locacoes from '../components/Locacoes'
-import { getClientesAction, getFilmesAction } from '../redux/actions';
+import { getClientesAction, getFilmesAction, getLocacoesAction } from '../redux/actions';
 import getLocadoraInfo from '../services/fetchLocadora';
 
 class HomePage extends Component {
@@ -20,10 +20,11 @@ class HomePage extends Component {
   componentDidMount() {
     this.fetchInfoLocadora('cliente');
     this.fetchInfoLocadora('filme');
+    this.fetchInfoLocadora('locacao');
   }
 
   async fetchInfoLocadora(section) {
-    const { getClientes, getFilmes } = this.props;
+    const { getClientes, getFilmes, getLocacoes } = this.props;
     const response = await getLocadoraInfo(section);
     if(section === 'cliente') {
       this.setState({ clientes: response });
@@ -32,6 +33,10 @@ class HomePage extends Component {
     if(section === 'filme') {
       this.setState({ filmes: response });
       getFilmes(response);
+    }
+    if(section === 'locacao') {
+      this.setState({ locacoes: response });
+      getLocacoes(response);
     }
   }
 
@@ -45,7 +50,6 @@ class HomePage extends Component {
       <div>
         <form>
           <label htmlFor="gerenciamento">
-            Gerenciar Filmes
             <input
               type="radio"
               name="gerenciamento"
@@ -53,22 +57,23 @@ class HomePage extends Component {
               onChange={ (e) => this.handleRadio(e) }
               checked={ exibe === 'filmes' ? true : false }
             />
+            Gerenciar Filmes
 
-            Gerenciar Clientes
             <input
               type="radio"
               name="gerenciamento"
               id="clientes"
               onChange={ (e) => this.handleRadio(e) }
             />
+            Gerenciar Clientes
 
-            Gerenciar Locações
             <input
               type="radio"
               name="gerenciamento"
               id="locacoes"
               onChange={ (e) => this.handleRadio(e) }
             />
+            Gerenciar Locações
           </label>
         </form>
         { exibe === 'filmes' && <Filmes /> }
@@ -81,7 +86,8 @@ class HomePage extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   getClientes: (payload) => dispatch(getClientesAction(payload)),
-  getFilmes: (payload) => dispatch(getFilmesAction(payload))
+  getFilmes: (payload) => dispatch(getFilmesAction(payload)),
+  getLocacoes: (payload) => dispatch(getLocacoesAction(payload))
 });
 
 export default connect(null, mapDispatchToProps)(HomePage);
