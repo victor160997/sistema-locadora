@@ -50,30 +50,36 @@ class HomePage extends Component {
       <div>
         <form>
           <label htmlFor="gerenciamento">
-            <input
-              type="radio"
-              name="gerenciamento"
-              id="filmes"
-              onChange={ (e) => this.handleRadio(e) }
-              checked={ exibe === 'filmes' ? true : false }
-            />
-            Gerenciar Filmes
+            <label htmlFor="filmes">
+              <input
+                type="radio"
+                name="gerenciamento"
+                id="filmes"
+                onChange={ (e) => this.handleRadio(e) }
+                checked={ exibe === 'filmes' ? true : false }
+              />
+              Gerenciar Filmes
+            </label>
 
-            <input
-              type="radio"
-              name="gerenciamento"
-              id="clientes"
-              onChange={ (e) => this.handleRadio(e) }
-            />
-            Gerenciar Clientes
+            <label htmlFor="clientes">
+              <input
+                type="radio"
+                name="gerenciamento"
+                id="clientes"
+                onChange={ (e) => this.handleRadio(e) }
+              />
+              Gerenciar Clientes
+            </label>
 
-            <input
-              type="radio"
-              name="gerenciamento"
-              id="locacoes"
-              onChange={ (e) => this.handleRadio(e) }
-            />
-            Gerenciar Locações
+            <label htmlFor="locacoes">
+              <input
+                type="radio"
+                name="gerenciamento"
+                id="locacoes"
+                onChange={ (e) => this.handleRadio(e) }
+              />
+              Gerenciar Locações
+            </label>
           </label>
         </form>
         { exibe === 'filmes' && <Filmes /> }

@@ -51,14 +51,14 @@ class Locacoes extends Component {
   }
 
   render() {
-    const { deleteLocacoes, locacaoState } = this.props;
+    const { deleteLocacoes, locacaoState, filmeState, clienteState } = this.props;
     return (
       <div>
         { adcLocacoes(this) }
         <table border="1px">
           <tbody>
             { renderHeaderLocacoes() }
-            { renderLocacoes(locacaoState, deleteLocacoes, this.setToUpdate) }
+            { renderLocacoes(locacaoState, deleteLocacoes, this.setToUpdate, filmeState, clienteState) }
           </tbody>
         </table>
       </div>

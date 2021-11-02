@@ -12,13 +12,22 @@ export function renderHeaderFilmes() {
   );
 }
 
+function apontaClassificacao(n) {
+  if (n === 1) return '+18 anos';
+  if (n === 2) return '+16 anos';
+  if (n === 3) return '+12 anos';
+  if (n === 4) return 'livre';
+}
+
 export function renderFilmes(filmes, deleteFilmes, setState) {
   return filmes.map((filme) => {
     return (
       <tr key={ filme['id_filme'] }>
         <td>{ filme['id_filme'] }</td>
         <td>{ filme.titulo }</td>
-        <td>{ filme['classificacao_indicativa'] }</td>
+        <td>
+          { `${filme['classificacao_indicativa']} - ${apontaClassificacao(filme['classificacao_indicativa'])}` }
+        </td>
         <td>{ filme.lancamento }</td>
         <td>
           <button

@@ -23,13 +23,21 @@ function ajustaData(date) {
   return dataAjustada.join('');
 }
 
-export function renderLocacoes(locacoes, deleteLocacoes, setState) {
+function localizaCliente(idCliente, clientes) {
+  return clientes.find((c) => c['id_cliente'] === idCliente).nome;
+}
+
+function localizaFilme(idFilme, filmes) {
+  return filmes.find((f) => f['id_filme'] === idFilme).titulo;
+}
+
+export function renderLocacoes(locacoes, deleteLocacoes, setState, filmeState, clienteState) {
   return locacoes.map((locacao) => {
     return (
       <tr key={ locacao['id_locacao'] }>
         <td>{ locacao['id_locacao'] }</td>
-        <td>{ locacao['id_cliente'] }</td>
-        <td>{ locacao['id_filme'] }</td>
+        <td>{ `${locacao['id_cliente']} - ${localizaCliente(locacao['id_cliente'], clienteState)}` }</td>
+        <td>{ `${locacao['id_filme']} - ${localizaFilme(locacao['id_filme'], filmeState)}` }</td>
         <td>{ locacao['data_locacao'] }</td>
         <td>{ locacao['data_devolucao'] }</td>
         <td>
@@ -99,10 +107,14 @@ const devolucaoNormal = () => {
 }
 
 function verificaLancamento(idFilme, filmes) {
-  const filme = filmes.find((filme) => filme['id_filme'] === idFilme);
-  const lancamento = filme.lancamento.replace(' 00:00:00', '');
-  const tempoDoLancamento = (new Date() - new Date(`${lancamento}T00:00:00-03:00`))/1000/60/60/24/30;
-  return tempoDoLancamento < 6 ? true : false;
+  const valido = filmes.some((filme) => filme['id_filme'] === idFilme);
+  if (valido) {
+    const filme = filmes.find((filme) => filme['id_filme'] === idFilme);
+    const lancamento = filme.lancamento.replace(' 00:00:00', '');
+    const tempoDoLancamento = (new Date() - new Date(`${lancamento}T00:00:00-03:00`))/1000/60/60/24/30;
+    return tempoDoLancamento < 6 ? true : false;
+  }
+  return undefined;
 }
 
 function renderOptionsClientes(clientes) {
@@ -113,12 +125,40 @@ function renderOptionsClientes(clientes) {
   ));
 }
 
-function renderOptionsFilmes(filmes) {
+function verificaFilmeAlugado (locacoes, idFilme) {
+  const alugado = locacoes.some((locacao) => locacao['id_filme'] === idFilme);
+  return alugado;
+}
+
+function renderOptionsFilmes(filmes, locacoes) {
   return filmes.map((filme) => (
-    <option value={filme['id_filme']} key={filme['id_filme']}>
+    <option
+      value={filme['id_filme']}
+      key={filme['id_filme']}
+      disabled = { verificaFilmeAlugado (locacoes, filme['id_filme']) }
+    >
       {`Id: ${filme['id_filme']} - ${filme.titulo}`}
     </option>
   ));
+}
+
+function verificaInputs(filmes, clientes, infos, locacoes) {
+  const filme = filmes.some((filme) => filme['id_filme'] === infos['id_filme']);
+  const cliente = clientes.some((cliente) => cliente['id_cliente'] === infos['id_cliente']);
+  const alugado = verificaFilmeAlugado (locacoes, infos['id_filme']);
+  if (alugado === true) {
+    return {
+      status: false,
+      msg: 'O filme escolhido já está alugado!',
+    };
+  }
+  if (filme === false || cliente === false) {
+    return {
+      status: false,
+      msg: 'Id do cliente ou Id do filme não é válido!',
+    };
+  }
+  return { status: true };
 }
 
 export function adcLocacoes(t) {
@@ -140,6 +180,7 @@ export function adcLocacoes(t) {
           value={ idCliente }
           onChange={ (e) => t.handleChange(e) }
         >
+          <option value=''>Escolha o cliente</option>
           { renderOptionsClientes(clienteState) }
         </select>
       </label>
@@ -156,7 +197,8 @@ export function adcLocacoes(t) {
           value={ idFilme }
           onChange={ (e) => t.handleChange(e) }
         >
-          { renderOptionsFilmes(filmeState) }
+          <option value=''>Escolha o filme</option>
+          { renderOptionsFilmes(filmeState, locacaoState) }
         </select>
       </label>
       { atualizando && <label htmlFor="dataLocacao">
@@ -182,21 +224,25 @@ export function adcLocacoes(t) {
         onClick={
           () => {
             if (atualizando) {
-              return updateOnlyLocacao({
+              const infos = {
                 id_locacao: idLocacao,
                 id_cliente: Number(idCliente),
                 id_filme: Number(idFilme),
                 data_locacao: `${dataLocacao} ${hr}:${min}:${sec}`,
                 data_devolucao: `${dataDevolucao} ${hr}:${min}:${sec}`,
-              })
+              };
+              const valido = verificaInputs(filmeState, clienteState, infos);
+              return valido.status ? updateOnlyLocacao(infos) : global.alert(valido.msg);
             }
-            return updateLocacoes({ 
+            const infos = { 
               id_locacao: geraIdLocacoes(locacaoState),
               id_cliente: Number(idCliente),
               id_filme: Number(idFilme),
               data_locacao: formulaData(new Date()),
               data_devolucao: verificaLancamento(Number(idFilme), filmeState) ? devolucaoLancamento() : devolucaoNormal(),
-            })
+            };
+            const valido = verificaInputs(filmeState, clienteState, infos, locacaoState);
+            return valido.status ? updateLocacoes(infos) : global.alert(valido.msg);
           }
         }
       >
