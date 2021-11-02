@@ -12,27 +12,34 @@ export function renderHeaderFilmes() {
   );
 }
 
-function apontaClassificacao(n) {
+function apontaClassificacao(num) {
+  const n = Number(num);
   if (n === 1) return '+18 anos';
   if (n === 2) return '+16 anos';
   if (n === 3) return '+12 anos';
   if (n === 4) return 'livre';
 }
 
-export function renderFilmes(filmes, deleteFilmes, setState) {
-  return filmes.map((filme) => {
+function verificaSePodeExcluir(filmeId, locacoes) {
+  return locacoes.some((l) => l['id_filme'] === filmeId);
+}
+
+export function renderFilmes(filmes, deleteFilmes, setState, locacaoState) {
+  return filmes.map((filme, i) => {
     return (
-      <tr key={ filme['id_filme'] }>
+      <tr key={ filme['id_filme'] } className={ i % 2 === 0 ? 'back-line' : ''}>
         <td>{ filme['id_filme'] }</td>
         <td>{ filme.titulo }</td>
         <td>
-          { `${filme['classificacao_indicativa']} - ${apontaClassificacao(filme['classificacao_indicativa'])}` }
+          { `ID ${filme['classificacao_indicativa']} = ${apontaClassificacao(filme['classificacao_indicativa'])}` }
         </td>
         <td>{ filme.lancamento }</td>
         <td>
           <button
             type="button"
-            onClick={ () => deleteFilmes(filme['id_filme']) }
+            onClick={ () => verificaSePodeExcluir(filme['id_filme'], locacaoState)
+              ? global.alert('Esse filme está alugado, para excluir é necessário que a locação seja excluída primeiro!')
+              : deleteFilmes(filme['id_filme']) }
           >
             Excluir Filme
           </button>
@@ -65,7 +72,7 @@ function geraIdFilmes(filmes) {
   return Number(lastId + 1);
 }
 
-function vererificaInfos(infos) {
+function vererificaInfos(infos, filmeState) {
   if (infos.classificacao_indicativa < 1
     || infos.classificacao_indicativa > 4) {
     return {
@@ -79,6 +86,16 @@ function vererificaInfos(infos) {
       msg: 'Título do filme inválido!'
     };
   }
+  const verificaSeFilmeExiste = filmeState
+    .some((filme) => filme.titulo === infos.titulo
+      && filme.lancamento === infos.lancamento
+      && Number(filme.classificacao_indicativa) === Number(infos.classificacao_indicativa));
+  if (verificaSeFilmeExiste === true) {
+    return {
+      status: false,
+      msg: 'Esse filme já está cadastrado em nosso sistema!'
+    };
+  }  
   const dataLancamento = `${infos.lancamento.replace(' 00:00:00', 'T00:00:00')}-03:00`;
   const compare = (new Date() - new Date(dataLancamento))/ 1000 / 60 / 60;
   if(infos.lancamento === ' 00:00:00'
@@ -136,7 +153,7 @@ export function adcFilmes(t) {
                 classificacao_indicativa: classificacaoIndicativa,
                 lancamento: `${lancamento} 00:00:00`
               };
-              const verifica = vererificaInfos(infos);
+              const verifica = vererificaInfos(infos, filmeState);
               return verifica.status ? updateOnlyFilme(infos) : global.alert(verifica.msg);
             }
             const infos = { 
@@ -145,7 +162,7 @@ export function adcFilmes(t) {
               classificacao_indicativa: classificacaoIndicativa,
               lancamento: `${lancamento} 00:00:00`
             };
-            const verifica = vererificaInfos(infos);
+            const verifica = vererificaInfos(infos, filmeState);
             return verifica.status ? updateFilmes(infos) : global.alert(verifica.msg);
           }
         }

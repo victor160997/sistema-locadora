@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { deleteLocacoesAction, updateLocacoesAction, updateOnlyLocacaoAction } from '../redux/actions';
 import { adcLocacoes, renderHeaderLocacoes, renderLocacoes } from '../services/FunctionsLocacoesComponent';
+import './locacoes.css';
 
 class Locacoes extends Component {
   constructor(props) {
@@ -53,7 +54,7 @@ class Locacoes extends Component {
   render() {
     const { deleteLocacoes, locacaoState, filmeState, clienteState } = this.props;
     return (
-      <div>
+      <div className="body-locacoes">
         { adcLocacoes(this) }
         <table border="1px">
           <tbody>

@@ -1,0 +1,31 @@
+.body-locacoes {
+  box-shadow: 0 5px 15px rgb(0, 0, 0);
+  padding: 25px;
+  border: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(44, 44, 44, 0.8);
+}
+
+.body-locacoes form {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+.body-locacoes label {
+  display: flex;
+  flex-direction: column;
+}
+
+.body-locacoes option {
+  color:rgb(44, 44, 44);
+  background-color: rgba(255, 196, 0, 0.616);
+}
+
+.body-locacoes option:disabled {
+  color:rgba(44, 44, 44, 0.3)
+}

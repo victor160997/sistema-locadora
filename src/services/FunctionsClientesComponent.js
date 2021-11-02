@@ -12,10 +12,18 @@ export function renderHeaderClientes() {
   );
 }
 
-export function renderClientes(clientes, deleteClientes, setState) {
-  return clientes.map((cliente) => {
+function verificaSePodeExcluir(clienteId, locacoes) {
+  return locacoes.some((l) => l['id_cliente'] === clienteId);
+}
+
+function verificaSeExisteNoSistema(cpf, clientes) {
+  return clientes.some((cliente) => Number(cliente.cpf) === Number(cpf));
+}
+
+export function renderClientes(clientes, deleteClientes, setState, locacaoState) {
+  return clientes.map((cliente, i) => {
     return (
-      <tr key={ cliente['id_cliente'] }>
+      <tr key={ cliente['id_cliente'] } className={ i % 2 === 0 ? 'back-line' : ''}>
         <td>{ cliente['id_cliente'] }</td>
         <td>{ cliente.cpf }</td>
         <td>{ cliente.nome }</td>
@@ -23,7 +31,9 @@ export function renderClientes(clientes, deleteClientes, setState) {
         <td>
           <button
             type="button"
-            onClick={ () => deleteClientes(cliente['id_cliente']) }
+            onClick={ () => verificaSePodeExcluir(cliente['id_cliente'], locacaoState)
+            ? global.alert('Esse cliente possui locação em andamento, para excluir é necessário que a(s) locação seja excluída primeiro!')
+            : deleteClientes(cliente['id_cliente']) }
           >
             Excluir Cliente
           </button>
@@ -58,11 +68,17 @@ function geraIdClientes(clientes) {
 
 const date = new Date();
 
-function vererificaInfos(infos) {
+function vererificaInfos(infos, clientes) {
   if (infos.cpf.length !== 11) {
     return {
       status: false,
       msg: 'Número de CPF inválido!'
+    };
+  }
+  if (verificaSeExisteNoSistema(infos.cpf, clientes) === true) {
+    return {
+      status: false,
+      msg: 'Esse CPF já está cadastrado no nosso sistema!'
     };
   }
   if(infos.nome.length < 3) {
@@ -128,7 +144,7 @@ export function adcCliente(t) {
                 cpf,
                 data_nascimento: `${nascimento} 00:00:00`
               };
-              const verifica = vererificaInfos(infos);
+              const verifica = vererificaInfos(infos, clienteState);
               return verifica.status ? updateOnlyCliente(infos)
                 : global.alert(verifica.msg);
             }
@@ -138,7 +154,7 @@ export function adcCliente(t) {
               cpf,
               data_nascimento: `${nascimento} 00:00:00`
             };
-            const verifica = vererificaInfos(infos);
+            const verifica = vererificaInfos(infos, clienteState);
               return verifica.status ? updateClientes(infos)
                 : global.alert(verifica.msg);
           }

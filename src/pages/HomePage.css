@@ -1,0 +1,162 @@
+.body-hp {
+  background-image: url('fundoMarvel.png');
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  color:blanchedalmond;
+  overflow: auto;
+}
+
+.category-radio {
+  display: none;
+}
+
+.category-text {
+  margin: 20px;
+}
+
+.category-text {
+  box-shadow: 0 5px 15px rgb(0, 0, 0);
+  letter-spacing: 1px;
+  position: relative;
+  margin: 20px;
+  padding: 19px 22px;
+  transition: all 0.2s ease;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: rgb(255, 255, 255);
+  text-shadow: 2px 0 5px rgb(44, 44, 44) , -2px 0 5px rgb(44, 44, 44) , 0 2px 5px rgb(44, 44, 44) , 0
+      -2px 5px rgb(44, 44, 44) , 1px 1px 5px rgb(44, 44, 44) , -1px -1px 5px rgb(44, 44, 44) , 1px -1px 5px rgb(44, 44, 44) , -1px
+      1px 5px rgb(44, 44, 44);
+  border: transparent;
+  border-radius: 28px;
+  cursor: pointer;
+}
+.category-text:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  border-radius: 28px;
+  background: rgba(255, 196, 0, 0.3);
+  width: 56px;
+  height: 56px;
+  transition: all 0.3s ease;
+}
+.category-text span {
+  position: relative;
+  font-size: 16px;
+  line-height: 18px;
+  font-weight: 900;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.category-text:hover:before {
+  width: 100%;
+  background: rgba(255, 196, 0, 0.616);
+}
+.category-text:hover svg {
+  transform: translateX();
+}
+.category-text:active {
+  transform: scale(0.96);
+}
+
+.category-active{
+  box-shadow: 0 5px 15px rgb(0, 0, 0);
+  letter-spacing: 1px;
+  position: relative;
+  margin: 20px;
+  padding: 19px 22px;
+  transition: all 0.2s ease;
+  background-color: transparent;
+  border: transparent;
+  cursor: pointer;
+  border-radius: 28px;
+  background: rgba(255, 196, 0, 0.8);
+  color: rgb(253, 253, 253)rgb(44, 44, 44);
+  text-shadow: 2px 0 5px rgb(44, 44, 44) , -2px 0 5px rgb(44, 44, 44) , 0 2px 5px rgb(44, 44, 44) , 0
+      -2px 5px rgb(44, 44, 44) , 1px 1px 5px rgb(44, 44, 44) , -1px -1px 5px rgb(44, 44, 44) , 1px -1px 5px rgb(44, 44, 44) , -1px
+      1px 5px rgb(44, 44, 44);
+}
+
+.form-category {
+  margin: 5vw;
+}
+
+.body-hp table {
+  box-shadow: 0 5px 15px rgb(0, 0, 0);
+  margin-top: 35px;
+  border: none;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.body-hp tr {
+  border: none;
+}
+
+.body-hp th {
+  border: none;
+  color: rgb(44, 44, 44);
+  text-shadow: 2px 0 5px white , -2px 0 5px white , 0 2px 5px white , 0
+      -2px 5px white , 1px 1px 5px white , -1px -1px 5px white , 1px -1px 5px white , -1px
+      1px 5px white;
+  background-color: rgba(255, 196, 0, 0.8);
+  padding: 15px;
+}
+
+.body-hp td {
+  border: none;
+  background-color: transparent;
+  padding: 10px;
+  text-align: center;
+}
+
+.back-line {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+input, select {
+  background-color: transparent;
+  border: none;
+  box-shadow: 0 5px 15px rgb(0, 0, 0);
+  color: white;
+  padding: 10px;
+  font-size: large;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+input:focus {
+  background-color: rgba(255, 196, 0, 0.5);
+}
+
+button {
+  background-color: rgba(255, 196, 0, 0.8);
+  padding: 13px;
+  font-size: small;
+  border:none;
+  box-shadow: 0 5px 15px rgb(0, 0, 0);
+  margin-left: 5px;
+  margin-right: 5px;
+  transition: background-color 0.25s, transform 0.25s, border-radius 0.25s;
+  cursor: pointer;
+  color: rgb(253, 253, 253);
+  text-shadow: 2px 0 5px rgb(44, 44, 44) , -2px 0 5px rgb(44, 44, 44) , 0 2px 5px rgb(44, 44, 44) , 0
+      -2px 5px rgb(44, 44, 44) , 1px 1px 5px rgb(44, 44, 44) , -1px -1px 5px rgb(44, 44, 44) , 1px -1px 5px rgb(44, 44, 44) , -1px
+      1px 5px rgb(44, 44, 44);
+}
+
+button:hover {
+  background-color: yellow;
+  transform: scale(1.1);
+  border-radius: 15px 0 15px 0;
+}

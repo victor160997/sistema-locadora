@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { deleteFilmesAction, updateFilmesAction, updateOnlyFilmeAction } from '../redux/actions';
 import { adcFilmes, renderFilmes, renderHeaderFilmes } from '../services/FunctionsFilmesComponent';
+import './filmes.css';
 
 class Filmes extends Component {
   constructor(props) {
@@ -49,14 +50,14 @@ class Filmes extends Component {
   }
 
   render() {
-    const { deleteFilmes, filmeState } = this.props;
+    const { deleteFilmes, filmeState, locacaoState } = this.props;
     return (
-      <div>
+      <div className="body-filmes">
         { adcFilmes(this) }
         <table border="1px">
           <tbody>
             { renderHeaderFilmes() }
-            { filmeState ? renderFilmes(filmeState, deleteFilmes, this.setToUpdate) : <tr><td>...loading</td></tr>}
+            { filmeState ? renderFilmes(filmeState, deleteFilmes, this.setToUpdate, locacaoState) : <tr><td>...loading</td></tr>}
           </tbody>
         </table>
       </div>
@@ -70,8 +71,9 @@ const mapDispatchToProps = (dispatch) => ({
   updateOnlyFilme: (payload) => dispatch(updateOnlyFilmeAction(payload))
 });
 
-const mapStateToProps = ({ locadoraDataFilme }) => ({
+const mapStateToProps = ({ locadoraDataFilme, locadoraDataLocacao }) => ({
   filmeState: locadoraDataFilme.filmes,
+  locacaoState: locadoraDataLocacao.locacoes,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filmes);

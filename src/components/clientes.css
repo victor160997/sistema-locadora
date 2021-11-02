@@ -1,0 +1,22 @@
+.body-clientes {
+  box-shadow: 0 5px 15px rgb(0, 0, 0);
+  padding: 25px;
+  border: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(44, 44, 44, 0.8);
+}
+
+.body-clientes form {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.body-clientes label {
+  display: flex;
+  flex-direction: column;
+}

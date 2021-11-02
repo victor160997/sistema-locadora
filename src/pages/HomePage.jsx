@@ -5,6 +5,7 @@ import Filmes from '../components/Filmes'
 import Locacoes from '../components/Locacoes'
 import { getClientesAction, getFilmesAction, getLocacoesAction } from '../redux/actions';
 import getLocadoraInfo from '../services/fetchLocadora';
+import './HomePage.css';
 
 class HomePage extends Component {
   constructor(props) {
@@ -47,38 +48,47 @@ class HomePage extends Component {
   render() {
     const { exibe } = this.state;
     return (
-      <div>
-        <form>
+      <div className="body-hp">
+        <form className="form-category">
           <label htmlFor="gerenciamento">
             <label htmlFor="filmes">
               <input
+                className="category-radio"
                 type="radio"
                 name="gerenciamento"
                 id="filmes"
                 onChange={ (e) => this.handleRadio(e) }
                 checked={ exibe === 'filmes' ? true : false }
               />
-              Gerenciar Filmes
+              <span className={ exibe === 'filmes' ? 'category-active' : 'category-text'}>
+                Gerenciar Filmes
+              </span>
             </label>
 
             <label htmlFor="clientes">
               <input
+                className="category-radio"
                 type="radio"
                 name="gerenciamento"
                 id="clientes"
                 onChange={ (e) => this.handleRadio(e) }
               />
-              Gerenciar Clientes
+              <span className={ exibe === 'clientes' ? 'category-active' : 'category-text'}>
+                Gerenciar Clientes
+              </span>
             </label>
 
             <label htmlFor="locacoes">
               <input
+                className="category-radio"
                 type="radio"
                 name="gerenciamento"
                 id="locacoes"
                 onChange={ (e) => this.handleRadio(e) }
               />
-              Gerenciar Locações
+              <span className={ exibe === 'locacoes' ? 'category-active' : 'category-text'}>
+                Gerenciar Locações
+              </span>
             </label>
           </label>
         </form>
