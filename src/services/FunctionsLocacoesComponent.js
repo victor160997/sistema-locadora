@@ -136,11 +136,11 @@ function renderOptionsClientes(clientes) {
 
 function verificaFilmeAlugado (locacoes, idFilme, idCliente) {
   if (idCliente) {
-    const alugado = locacoes.some((locacao) => locacao['id_filme'] === idFilme
+    const alugado = locacoes.some((locacao) => Number(locacao['id_filme']) === (Number(idFilme))
       && locacao['id_cliente'] === idCliente);
       return alugado;
   }
-  const alugado = locacoes.some((locacao) => locacao['id_filme'] === idFilme);
+  const alugado = locacoes.some((locacao) => Number(locacao['id_filme']) === Number(idFilme));
   return alugado;
 }
 
@@ -156,10 +156,11 @@ function renderOptionsFilmes(filmes, locacoes) {
   ));
 }
 
-function verificaInputs(filmes, clientes, infos, locacoes) {
+function verificaInputs(filmes, clientes, infos, locacoes, idCliente) {
   const filme = filmes.some((filme) => filme['id_filme'] === infos['id_filme']);
   const cliente = clientes.some((cliente) => cliente['id_cliente'] === infos['id_cliente']);
-  const alugado = verificaFilmeAlugado (locacoes, infos['id_filme'], infos['id_cliente']);
+  const alugado = verificaFilmeAlugado (locacoes, infos['id_filme'], idCliente);
+  console.log(alugado);
   if (alugado === true) {
     return {
       status: false,
@@ -245,7 +246,7 @@ export function adcLocacoes(t) {
                 data_locacao: `${dataLocacao} ${hr}:${min}:${sec}`,
                 data_devolucao: `${dataDevolucao} ${hr}:${min}:${sec}`,
               };
-              const valido = verificaInputs(filmeState, clienteState, infos, locacaoState);
+              const valido = verificaInputs(filmeState, clienteState, infos, locacaoState, infos['id_cliente']);
               return valido.status ? updateOnlyLocacao(infos) : global.alert(valido.msg);
             }
             const infos = { 
