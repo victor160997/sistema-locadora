@@ -135,12 +135,16 @@ export function adcFilmes(t) {
       </label>
       <label htmlFor="classificacaoIndicativa">
         Classificação Indicativa
-        <input
-          type="number"
+        <select
           name="classificacaoIndicativa"
           value={ classificacaoIndicativa }
           onChange={ (e) => t.handleChange(e) }
-        />  
+        >
+          <option value="1">+18 anos</option>
+          <option value="2">+16 anos</option>
+          <option value="3">+12 anos</option>
+          <option value="1">Livre</option>
+        </select>
       </label>
       <button
         type="button"

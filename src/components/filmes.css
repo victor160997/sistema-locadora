@@ -21,3 +21,11 @@
   flex-direction: column;
 }
 
+.body-filmes option {
+  color:rgb(44, 44, 44);
+  background-color: rgba(255, 196, 0, 0.616);
+}
+
+.body-filmes option:disabled {
+  color:rgba(44, 44, 44, 0.3)
+}

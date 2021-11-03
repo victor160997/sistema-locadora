@@ -6,6 +6,7 @@ export function renderHeaderLocacoes() {
       <th>Id do Filme</th>
       <th>Data da Locação</th>
       <th>Data da Devolução</th>
+      <th>Status da locação</th>
       <th>
         Excluir Locação / Atualizar Informações
       </th>
@@ -37,6 +38,25 @@ function localizaFilme(idFilme, filmes) {
   return undefined;
 }
 
+function formulaDataPadrao(data) {
+  const arrayDateTime = data.split(' ');
+  return `${arrayDateTime[0]}T${arrayDateTime[1]}-03:00`;
+}
+
+function verificaFilmeAlugado(locacoes, idFilme, idCliente) {
+  if (idCliente) {
+    const alugado = locacoes.some((locacao) => Number(locacao['id_filme']) === (Number(idFilme))
+      && locacao['id_cliente'] === idCliente
+      && new Date(formulaDataPadrao(locacao['data_devolucao'])) -  new Date() > 0);
+      return alugado;
+  }
+  const alugado = locacoes
+    .some((locacao) => Number(locacao['id_filme']) === Number(idFilme)
+      && new Date(formulaDataPadrao(locacao['data_devolucao'])) -  new Date() > 0);
+  return alugado;
+}
+
+
 export function renderLocacoes(locacoes, deleteLocacoes, setState, filmeState, clienteState) {
   if (filmeState.length > 0 && clienteState.length > 0) {
     return locacoes.map((locacao, i) => {
@@ -48,6 +68,7 @@ export function renderLocacoes(locacoes, deleteLocacoes, setState, filmeState, c
           <td>{ `${locacao['id_filme']} - ${localizaFilme(locacao['id_filme'], filmeState)}` }</td>
           <td>{ locacao['data_locacao'] }</td>
           <td>{ locacao['data_devolucao'] }</td>
+          <td>{ verificaFilmeAlugado(locacoes, locacao['id_filme']) ? 'Em andamento' : 'Finalizada' }</td>
           <td>
             <button
               type="button"
@@ -134,16 +155,6 @@ function renderOptionsClientes(clientes) {
   ));
 }
 
-function verificaFilmeAlugado (locacoes, idFilme, idCliente) {
-  if (idCliente) {
-    const alugado = locacoes.some((locacao) => Number(locacao['id_filme']) === (Number(idFilme))
-      && locacao['id_cliente'] === idCliente);
-      return alugado;
-  }
-  const alugado = locacoes.some((locacao) => Number(locacao['id_filme']) === Number(idFilme));
-  return alugado;
-}
-
 function renderOptionsFilmes(filmes, locacoes) {
   return filmes.map((filme) => (
     <option
@@ -181,7 +192,6 @@ export function adcLocacoes(t) {
   const { updateLocacoes, locacaoState, updateOnlyLocacao, clienteState, filmeState } = t.props;
   return (
     <form>
-      { verificaLancamento(1, filmeState) }
       <label htmlFor="idCliente">
         Id do cliente
         <input

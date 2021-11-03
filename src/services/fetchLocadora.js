@@ -18,6 +18,24 @@ export default async function getLocadoraInfo(section) {
           "titulo": "Invocação do Mal 3",
           "classificacao_indicativa": 1,
           "lancamento": "2021-06-03 00:00:00"
+        },
+        {
+          "id_filme": 3,
+          "titulo": "Harry Potter e o Cálice de Fogo",
+          "classificacao_indicativa": 2,
+          "lancamento": "2005-11-25 00:00:00"
+        },
+        {
+          "id_filme": 3,
+          "titulo": "Harry Potter e o Cálice de Fogo",
+          "classificacao_indicativa": 3,
+          "lancamento": "2005-11-25 00:00:00"
+        },
+        {
+          "id_filme": 4,
+          "titulo": "Venon 2",
+          "classificacao_indicativa": 2,
+          "lancamento": "2021-10-07 00:00:00"
         }
       ];
     }
@@ -25,21 +43,39 @@ export default async function getLocadoraInfo(section) {
       return [
         {
           "id_cliente": 1,
-          "nome": "Lucas",
+          "nome": "Lucas Claro",
           "cpf": "12136545896",
           "data_nascimento": "2000-01-02 00:00:00"
         },
         {
           "id_cliente": 2,
-          "nome": "Claudia",
+          "nome": "Claudia Raia",
           "cpf": "96587452145",
           "data_nascimento": "1990-08-08 00:00:00"
         },
         {
           "id_cliente": 3,
-          "nome": "Vanessa",
+          "nome": "Vanessa Camargo",
           "cpf": "99874551236",
           "data_nascimento": "1986-07-15 00:00:00"
+        },
+        {
+          "id_cliente": 4,
+          "nome": "Victor Mendonça",
+          "cpf": "65654898654",
+          "data_nascimento": "1997-09-16 00:00:00"
+        },
+        {
+          "id_cliente": 5,
+          "nome": "Marcelle Toledo",
+          "cpf": "65412598746",
+          "data_nascimento": "2002-02-23 00:00:00"
+        },
+        {
+          "id_cliente": 6,
+          "nome": "Gabriel Barbosa",
+          "cpf": "98760100036",
+          "data_nascimento": "1995-05-05 00:00:00"
         }
       ];
     }
@@ -51,6 +87,13 @@ export default async function getLocadoraInfo(section) {
           "id_filme": 2,
           "data_locacao": "2021-09-16 13:45:32",
           "data_devolucao": "2021-09-18 13:45:32"
+        },
+        {
+          "id_locacao": 2,
+          "id_cliente": 1,
+          "id_filme": 3,
+          "data_locacao": "2021-09-06 11:23:41",
+          "data_devolucao": "2021-09-09 11:23:41"
         }
       ];
     }
