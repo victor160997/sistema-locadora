@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/sistema-locadora/static/css/main.f04cc2ce.chunk.css",
+    "main.css": "/sistema-locadora/static/css/main.29bdd828.chunk.css",
     "main.js": "/sistema-locadora/static/js/main.221b8463.chunk.js",
     "main.js.map": "/sistema-locadora/static/js/main.221b8463.chunk.js.map",
     "runtime-main.js": "/sistema-locadora/static/js/runtime-main.65318d90.js",
@@ -10,14 +10,14 @@
     "static/js/3.0775c2df.chunk.js": "/sistema-locadora/static/js/3.0775c2df.chunk.js",
     "static/js/3.0775c2df.chunk.js.map": "/sistema-locadora/static/js/3.0775c2df.chunk.js.map",
     "index.html": "/sistema-locadora/index.html",
-    "static/css/main.f04cc2ce.chunk.css.map": "/sistema-locadora/static/css/main.f04cc2ce.chunk.css.map",
+    "static/css/main.29bdd828.chunk.css.map": "/sistema-locadora/static/css/main.29bdd828.chunk.css.map",
     "static/js/2.02971930.chunk.js.LICENSE.txt": "/sistema-locadora/static/js/2.02971930.chunk.js.LICENSE.txt",
     "static/media/HomePage.css": "/sistema-locadora/static/media/fundoMarvel.b1e5133e.png"
   },
   "entrypoints": [
     "static/js/runtime-main.65318d90.js",
     "static/js/2.02971930.chunk.js",
-    "static/css/main.f04cc2ce.chunk.css",
+    "static/css/main.29bdd828.chunk.css",
     "static/js/main.221b8463.chunk.js"
   ]
 }
