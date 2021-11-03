@@ -38,7 +38,7 @@ export function renderFilmes(filmes, deleteFilmes, setState, locacaoState) {
           <button
             type="button"
             onClick={ () => verificaSePodeExcluir(filme['id_filme'], locacaoState)
-              ? global.alert('Esse filme está alugado, para excluir é necessário que a locação seja excluída primeiro!')
+              ? global.alert('Esse filme possui histórico de locação, para excluir é necessário que a locação seja excluída primeiro!')
               : deleteFilmes(filme['id_filme']) }
           >
             Excluir Filme
